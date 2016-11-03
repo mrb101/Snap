@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block body %}
+<!-- Header and Nav -->
+<div class="row">
+	<div class="large-12 columns">
+  		<div class="panel">
+			<h1>Bookings</h1>
+  		</div>
+	</div>
+</div>
+<div class="row add-button">
+    <div class="large-3 large-offset-9">
+        <button class="hollow button add-new" href="#">New Booking</button>
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        <table class="stack">
+            <thead>
+                <tr class="table-head">
+                    <th>Booking Number</th>
+                    <th>Car Type</th>
+                    <th>Customer</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <tr>{{ booking.booking_number }}</tr>
+                    <tr>{{ booking.category }}</tr>
+                    <tr>{{ booking.customer}}</tr>
+                    <tr>{{ booking.starts }}</tr>
+                    <tr>{{ booking.rental_end }}</tr>
+                    <tr>{{ booking.duration }}</tr>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

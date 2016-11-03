@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="row">
+  <div class="medium-6 medium-centered large-4 large-centered columns">
+    <form>
+      <div class="row column log-in-form">
+        <h4 class="text-center">Register</h4>
+        <label>Username
+          <input type="text" placeholder=username>
+        </label>
+
+        <label>Email
+          <input type="text" placeholder="somebody@example.com">
+        </label>
+        <label>Mobile No.
+          <input type="text" placeholder="somebody@example.com">
+        </label>
+        <label>Password
+          <input type="text" placeholder="Password1">
+        </label>
+        <label>Re-Enter Password
+          <input type="text" placeholder="Password2">
+        </label>
+        <p><a type="submit" class="button expanded">Log In</a></p>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
