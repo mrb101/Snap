@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from cars.models import Category
 
@@ -34,43 +34,59 @@ def car_booking(request):
     form = BookingForm(request.POST)
     if request.method == 'POST':
         category_number = request.POST.get('category')
-        category = Category.objects.get(id=category_number)
+        category = Category.objects.get(concept=category_number)
         starts = request.POST.get('starts')
-        print(starts)
         duration = request.POST.get('duration')
+        if duration == 'half':
+            time = timedelta(hours=6)
+        elif duration == 'day':
+            time = timedelta(days=1)
+        elif duration == 'week':
+            time = timedelta(weeks=1)
+        elif duration == 'month':
+            time = timedelta(weeks=4)
+        else:
+            time = 'Something went wrong!'
         booking = Booking()
         booking.customer = request.user
         booking.category = category
-        booking.starts = datetime.strptime(starts, '%x %X')
-        booking.duration = duration
+        booking.starts = datetime.strptime(starts, '%Y-%m-%dT%H:%M')
+        booking.duration = time
         booking.save()
         return HttpResponse(json.dumps({
             'type': 'S01',
             'msg': 'You order has been submited.',
-            'category': booking.category,
-            'starts': booking.starts,
+            'category': str(booking.category),
+            'starts': str(booking.starts),
         }))
     context = {'form': form}
     return render(request, template, context)
 
 
 def confirm_booking(request, id):
-    template = 'bookings/form.html'
+    template = 'bookings/booking_details.html'
     form = BookingConfirmationForm(request.POST)
     booking = Booking.objects.get(id=id)
-    if request.method == 'POST':
-        booking.booking_confirmed = request.POST.get('checked')
-        booking.save()
+    if booking.booking_confirmed == True:
         return HttpResponse(json.dumps({
-            'type': 'S01',
-            'msg': 'You have confirmed booking number {0}'.format(booking_number),
-            'starts': booking.starts,
-            'duration': booking.duration,
-            'address': booking.dropoff,
-            'customer': booking.customer,
-            'phone': booking.customer.mobile,
+            'type': 'S02',
+            'msg': 'Booking has been already confirmed',
         }))
-    context = {'form': form}
+    else:
+        return_time = booking.duration + booking.starts
+        if request.method == 'POST':
+            booking.booking_confirmed = request.POST.get('checked')
+            booking.save()
+            return HttpResponse(json.dumps({
+                'type': 'S01',
+                'msg': 'You have confirmed booking number {0}'.format(booking.id),
+                'starts': booking.starts,
+                'duration': booking.duration,
+                'address': booking.dropoff,
+                'customer': booking.customer,
+                'phone': booking.customer.mobile,
+            }))
+    context = {'form': form, 'booking': booking, 'return_time': return_time}
     return render(request, template, context)
 
 

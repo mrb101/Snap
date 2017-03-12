@@ -1,0 +1,61 @@
+body {
+  background: url(/static/Images/3.jpg) no-repeat center center fixed;
+  background-size: cover;
+  text-align: center;
+  padding-bottom: 79%;
+}
+
+#header {
+  background-color: #A22A29;
+  color: white;
+  width: 100%;
+  text-align: center;
+}
+
+#header img {
+  width: 40%;
+  padding-top: 3%;
+  padding-bottom: 3%;
+}
+
+#header .fa-bars {
+  padding-top: 6%;
+  padding-left: 4%;
+  font-size: 200%;
+}
+
+#header .fa-user {
+  padding-top: 6%;
+  padding-right: 4%;
+  font-size: 200%;
+}
+
+#content {
+  margin-top: 10%;
+}
+
+table {
+  width: 90%;
+  color: white;
+}
+
+table h1,
+table h3,
+table h4,
+table h5 {
+  font-weight: 900;
+}
+
+#city,
+#time {
+  background-color: #6D696A;
+  width: 100%;
+  margin: auto;
+  padding: 2%;
+}
+
+#msg {
+  color: white;
+  background-color: #A22A29;
+  padding: 2%;
+}

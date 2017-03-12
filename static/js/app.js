@@ -1,20 +1,20 @@
-$(document).foundation()
-
-
 $(document).on('submit', '#addBooking', (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const csrfToken = $('input[name=csrfmiddlewaretoken]').val()
+
     const category = $('#id_category').val();
+    const address = $('#id_address').val();
     const starts = $('#id_starts').val();
-    const duration = $('#id_duration').val();
+    const duration= $('#id_duration').val();
     $.ajax({
         type: 'POST',
         url: '/booking/new/',
         data: {
             category: category,
+            address: address,
             starts: starts,
             duration: duration,
-            csrfmiddlewaretoken: csrfToken,
+            csrfmiddlewaretoken: csrfToken,     
         },
         success: (res) => {
             const response = JSON.parse(res);

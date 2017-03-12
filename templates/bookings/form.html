@@ -1,23 +1,37 @@
-{% extends 'base.html' %}
+{% extends 'booking.html' %}
+{% load static %} 
+
 {% block body %}
-<div class="row">
-  <div class="medium-6 medium-centered large-4 large-centered columns">
-    <form id="addBooking" method="POST" action="">
-      {% csrf_token %}
-      <div class="row column log-in-form">
-        <h4 class="text-center">Register</h4>
-        <label>Car Type
-            {{ form.category }}
-        </label>
-        <label>From
-            {{ form.starts }}
-        </label>
-        <label>Duration
-            {{ form.duration }}
-        </label>
-        <p><button type="submit" class="button expanded">Book</a></p>
-      </div>
-    </form>
-  </div>
+
+<div class="col-sm-12" id="content">
+  <form id="addBooking" method="POST" action=""> {% csrf_token %}
+    <table align="center">
+        <tr>
+            <td colspan="2">
+                <h3>Booking Information</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <select id="id_category" class="cartype">
+                    <option value="ECO">Eco</option>
+                    <option value="SED">Sedan</option>
+                    <option value="FAM">Family</option>
+                </select>
+                <h4><input id="id_address" type="text" name="address" placeholder="Address"><br></h4>
+                <h4><input id="id_starts" type="datetime-local" name="date" placeholder="Date"><br></h4>
+                <select id="id_duration" class="rentalduration">
+                    <option value="half">6 Hours</option>
+                    <option value="day">1 Day</option>
+                    <option value="week">1 Week</option>
+                    <option value="month">1 Month</option>
+                </select>
+                <br />
+                <input type="submit" class="fa fa-car" value="Book">
+            </td>
+        </tr>
+    </table>
+  </form>
 </div>
+
 {% endblock %}

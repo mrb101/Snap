@@ -18,12 +18,16 @@ from django.contrib import admin
 
 from main import views as main_views
 from profiles import views as profiles_views
+from bookings import views as bookings_views
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^booking/', include('bookings.urls')),
-    url(r'^login/$', profiles_views.login, name='login'),
+    url(r'^login/$', profiles_views.signin, name='login'),
     url(r'^register/$', profiles_views.register, name='register'),
+    url(r'^book/$', bookings_views.car_booking, name='car_booking'),
+    url(r'^book/new/$', bookings_views.car_booking, name='new-booking'),
+    url(r'^book/(?P<id>\d+)/$', bookings_views.confirm_booking, name='new-booking'),
     url(r'^$', main_views.home, name='home'),
 ]

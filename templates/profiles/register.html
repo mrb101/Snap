@@ -1,29 +1,22 @@
-{% extends 'base.html' %}
-{% block body %}
-<div class="row">
-  <div class="medium-6 medium-centered large-4 large-centered columns">
-    <form>
-      <div class="row column log-in-form">
-        <h4 class="text-center">Register</h4>
-        <label>Username
-          <input type="text" placeholder=username>
-        </label>
+{% extends 'profile.html' %} {% load static %} {% block body %}
+<div class="col-sm-12" id="content">
+  <img src="{% static 'Images/white.png' %}"><br> Register
+  <form method="POST">
+    <div class="row column log-in-form">
 
-        <label>Email
-          <input type="text" placeholder="somebody@example.com">
-        </label>
-        <label>Mobile No.
-          <input type="text" placeholder="somebody@example.com">
-        </label>
-        <label>Password
-          <input type="text" placeholder="Password1">
-        </label>
-        <label>Re-Enter Password
-          <input type="text" placeholder="Password2">
-        </label>
-        <p><a type="submit" class="button expanded">Log In</a></p>
-      </div>
-    </form>
-  </div>
+      <input type="text" placeholder="U s e r n a m e">
+
+      <input type="text" placeholder="E m a i l">
+
+      <input type="text" placeholder="M o b i l e No.">
+
+      <input type="text" placeholder="P a s s w o r d">
+
+      <input type="text" placeholder="R e - t y p e  P a s s w o r d">
+
+      <input type="submit" name="submit" value="C  R  U  Z    N  O  W">
+    </div>
+  </form>
+</div>
 </div>
 {% endblock %}
