@@ -1,3 +1,4 @@
+// Book a car
 $(document).on('submit', '#addBooking', (e) => {
     e.preventDefault();
     const csrfToken = $('input[name=csrfmiddlewaretoken]').val()
@@ -14,7 +15,7 @@ $(document).on('submit', '#addBooking', (e) => {
             address: address,
             starts: starts,
             duration: duration,
-            csrfmiddlewaretoken: csrfToken,     
+            csrfmiddlewaretoken: csrfToken,
         },
         success: (res) => {
             const response = JSON.parse(res);
@@ -29,4 +30,25 @@ $(document).on('submit', '#addBooking', (e) => {
             console.log(res)
         }
     })
-})
+});
+
+
+// Confirm booking
+$(document).on('click', '#accept', function(e) {
+    e.preventDefault();
+    const element = $(this);
+    const booking_id = element.attr("value");
+    const csrfToken = $('input[name=csrfmiddlewaretoken]').val();
+    console.log(csrfToken)
+    $.ajax({
+        type: 'POST',
+        url: '/book/' + booking_id + '/confirm/',
+        data: {
+            booking: booking_id,
+            csrfmiddlewaretoken: csrfToken,
+        },
+        success: (res) => {
+        console.log("done!");
+        }
+    })
+});

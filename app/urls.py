@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^register/$', profiles_views.register, name='register'),
     url(r'^book/$', bookings_views.car_booking, name='car_booking'),
     url(r'^book/new/$', bookings_views.car_booking, name='new-booking'),
-    url(r'^book/(?P<id>\d+)/$', bookings_views.confirm_booking, name='new-booking'),
+    url(r'^book/(?P<id>\d+)/$', bookings_views.confirm_booking, name='show-booking'),
+    url(r'^book/(?P<id>\d+)/confirm/$', bookings_views.confirm_booking, name='confirm-booking'),
     url(r'^$', main_views.home, name='home'),
 ]

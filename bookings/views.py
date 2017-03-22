@@ -67,25 +67,25 @@ def confirm_booking(request, id):
     template = 'bookings/booking_details.html'
     form = BookingConfirmationForm(request.POST)
     booking = Booking.objects.get(id=id)
-    if booking.booking_confirmed == True:
-        return HttpResponse(json.dumps({
-            'type': 'S02',
-            'msg': 'Booking has been already confirmed',
-        }))
-    else:
-        return_time = booking.duration + booking.starts
-        if request.method == 'POST':
-            booking.booking_confirmed = request.POST.get('checked')
-            booking.save()
+    return_time = booking.duration + booking.starts
+    if request.method == 'POST':
+        if booking.booking_confirmed == True:
             return HttpResponse(json.dumps({
-                'type': 'S01',
-                'msg': 'You have confirmed booking number {0}'.format(booking.id),
-                'starts': booking.starts,
-                'duration': booking.duration,
-                'address': booking.dropoff,
-                'customer': booking.customer,
-                'phone': booking.customer.mobile,
+                'type': 'S02',
+                'msg': 'Booking has been already confirmed',
             }))
+        else:
+            if request.method == 'POST':
+                booking.booking_confirmed = True
+                booking.save()
+                return HttpResponse(json.dumps({
+                    'type': 'S01',
+                    'msg': 'You have confirmed booking number {0}'.format(booking.id),
+                    'starts': booking.starts,
+                    'duration': booking.duration,
+                    'address': booking.dropoff,
+                    'customer': booking.customer,
+                }))
     context = {'form': form, 'booking': booking, 'return_time': return_time}
     return render(request, template, context)
 
