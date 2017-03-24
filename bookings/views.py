@@ -75,17 +75,16 @@ def confirm_booking(request, id):
                 'msg': 'Booking has been already confirmed',
             }))
         else:
-            if request.method == 'POST':
-                booking.booking_confirmed = True
-                booking.save()
-                return HttpResponse(json.dumps({
-                    'type': 'S01',
-                    'msg': 'You have confirmed booking number {0}'.format(booking.id),
-                    'starts': booking.starts,
-                    'duration': booking.duration,
-                    'address': booking.dropoff,
-                    'customer': booking.customer,
-                }))
+            booking.booking_confirmed = True
+            booking.save()
+            return HttpResponse(json.dumps({
+                'type': 'S01',
+                'msg': 'You have confirmed booking number {0}'.format(booking.id),
+                'starts': str(booking.starts),
+                'duration': str(booking.duration),
+                'address': str(booking.dropoff),
+                'customer': str(booking.customer),
+            }))
     context = {'form': form, 'booking': booking, 'return_time': return_time}
     return render(request, template, context)
 
