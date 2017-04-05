@@ -2,6 +2,7 @@
 <div class="col-sm-12" id="content">
   <img src="{% static 'Images/white.png' %}"><br> Register
   <form method="POST">
+      {% csrf_token %}
     <div class="row column log-in-form">
 
       <input type="text" placeholder="U s e r n a m e">
@@ -14,7 +15,7 @@
 
       <input type="text" placeholder="R e - t y p e  P a s s w o r d">
 
-      <input type="submit" name="submit" value="C  R  U  Z    N  O  W">
+      <input type="submit" name="submit" value="R E G I S T E R">
     </div>
   </form>
 </div>

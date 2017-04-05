@@ -14,7 +14,7 @@ def signin(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return redirect(request.GET.get('next') or 'car_type')
+                return redirect(request.GET.get('next') or 'new-booking')
             else:
                 return redirect('login')
         else:
@@ -24,6 +24,10 @@ def signin(request):
 
 
 def register(request):
-    template = 'profiles/register.html'
-    context = {}
-    return render(request, template, context)
+    if request.method == "POST":
+        print("hello from post")
+
+
+def signout(request):
+    logout(request)
+    return redirect('login')
