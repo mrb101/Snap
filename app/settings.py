@@ -126,3 +126,7 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, 'static')
 ]
+
+# Env Var
+API_KEY = os.environ.get('API_KEY')
+API_SEC = os.environ.get('API_SEC')

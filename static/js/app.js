@@ -1,5 +1,5 @@
 // Book a car
-$(document).on('submit', '#addBooking', (e) => {
+$(document).on('submit', '#addBooking', function(e) {
     e.preventDefault();
     const csrfToken = $('input[name=csrfmiddlewaretoken]').val()
 
@@ -7,6 +7,7 @@ $(document).on('submit', '#addBooking', (e) => {
     const address = $('#id_address').val();
     const starts = $('#id_starts').val();
     const duration= $('#id_duration').val();
+    console.log(category)
     $.ajax({
         type: 'POST',
         url: '/booking/new/',
@@ -91,6 +92,7 @@ $(document).on('click', '#return', function(e) {
     })
 });
 
+/*
 // Register
 $(document).on('submit', '#registerForm', function(e) {
     e.preventDefault();
@@ -116,3 +118,4 @@ $(document).on('submit', '#registerForm', function(e) {
         }
     })
 });
+*/

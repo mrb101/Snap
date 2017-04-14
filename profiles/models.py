@@ -6,10 +6,11 @@ from .validators import validate_phone
 
 
 class Profile(models.Model):
-    user = models.ForeignKey(User)
+    user = models.OneToOneField(User)
     phone = models.CharField(
         max_length=20,
         blank=False,
         null=False,
         validators=[validate_phone]
     )
+    supplier = models.BooleanField(default=False)

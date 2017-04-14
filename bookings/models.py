@@ -22,7 +22,8 @@ class Booking(models.Model):
         default=uuid.uuid4,
         editable=False
     )
-    customer = models.ForeignKey(User)
+    customer = models.ForeignKey(User, related_name="customers")
+    supplier = models.ForeignKey(User, related_name="suppliers", null=True, blank=True)
     category = models.ForeignKey(Category)
     starts = models.DateTimeField(null=True)
     duration = models.DurationField(
@@ -36,6 +37,8 @@ class Booking(models.Model):
     car_deliverd = models.BooleanField(default=False)
     car_returned = models.BooleanField(default=False)
     fees_paid = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now=True, auto_now_add=False)
+    updated = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     def __unicode__(self):
         return str(self.booking_number)

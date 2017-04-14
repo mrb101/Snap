@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 
 import json
 from datetime import datetime, timedelta
 
 from cars.models import Category
+
+from .utils import send_sms_notification, send_email_notification
 
 from .models import Booking
 from .forms import (
@@ -44,8 +47,9 @@ def car_booking(request):
     template = 'bookings/form.html'
     form = BookingForm(request.POST)
     if request.method == 'POST':
-        category_number = request.POST.get('category')
-        category = Category.objects.get(concept=category_number)
+        category_string = request.POST.get('category')
+        print(category_string)
+        category = Category.objects.get(concept=category_string)
         starts = request.POST.get('starts')
         duration = request.POST.get('duration')
         if duration == 'half':
@@ -64,6 +68,12 @@ def car_booking(request):
         booking.starts = datetime.strptime(starts, '%Y-%m-%dT%H:%M')
         booking.duration = time
         booking.save()
+        # get suppliers
+        suppliers = User.objects.filter(profile__supplier=True)
+        # loop over supplier and send sms
+        for supplier in suppliers:
+            phone = supplier.profile.phone
+            send_sms_notification(str(phone), "go to 192.168.33.10:3000/book/{0} to accept booking".format(booking.id))
         return HttpResponse(json.dumps({
             'type': 'S01',
             'msg': 'You order has been submited.',
@@ -85,7 +95,13 @@ def confirm_booking(request, id):
             }))
         else:
             booking.booking_confirmed = True
+            booking.supplier = request.user
             booking.save()
+            customer = booking.customer
+            phone = customer.profile.phone
+            supplier = request.user
+            booking = customer.customers.latest("updated")
+            send_sms_notification(str(phone), "go to 192.168.33.10:3000/book/{0}  to confirm booking".format(booking.pk))
             return HttpResponse(json.dumps({
                 'type': 'S01',
                 'msg': 'You have confirmed booking number {0}'.format(booking.id),
@@ -108,6 +124,9 @@ def car_delivery(request, id):
         else:
             booking.car_deliverd = True
             booking.save()
+            customer = booking.customer
+            phone = customer.profile.phone
+            send_sms_notification(str(phone), "go to 192.168.33.10:3000/book/{0}  to confirm car delivery".format(booking.pk))
             return HttpResponse(json.dumps({
                 'type': 'S01',
                 'msg': 'Thank you, Pick up time for the car is on {0}'.format(return_time),
@@ -126,6 +145,9 @@ def car_return(request, id):
             booking.car_returned = True
             booking.fees_paid = True
             booking.save()
+            supplier = booking.supplier
+            phone = supplier.profile.phone
+            send_sms_notification(str(phone), "go to 192.168.33.10:3000/book/{0}  to confirm car returned".format(booking.pk))
             return HttpResponse(json.dumps({
                 'type': 'S01',
                 'msg': 'Thank you',
