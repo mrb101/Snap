@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
+
 
 def signin(request):
     template = 'profiles/login.html'
@@ -24,10 +26,13 @@ def signin(request):
 
 
 def register(request):
+    template = 'profiles/register.html'
+    form = UserCreationForm(request.POST or None)
     if request.method == "POST":
-        print("hello from post")
+        if form.is_valid():
+            pass
 
 
 def signout(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')

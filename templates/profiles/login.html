@@ -1,10 +1,23 @@
-{% extends "profile.html" %} {% load static %} {% block body %}
-<div class="col-sm-12" id="content">
-    <img src="{% static 'Images/white.png' %}"><br>
-    <form method="POST">{% csrf_token %}
-        <input type="text" name="username" placeholder="U s e r N a m e"><br>
-        <input type="password" name="password" placeholder="P a s s w o r d"><br>
-        <input type="submit" name="submit" value="C  R  U  Z    N  O  W">
-    </form>
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+<div id="green" style="padding-bottom: 100px">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-lg-offset-2 centered" id="content">
+                <div class="col-sm-12" id="content">
+                    <h3>Login</h3>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="username" placeholder="User Name"><br>
+                            <input class="form-control" type="password" name="password" placeholder="Password"><br>
+                            <input class="btn btn-primary" type="submit" name="submit" value="CRUZ NOW">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

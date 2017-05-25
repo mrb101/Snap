@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 
@@ -25,6 +27,7 @@ def bookings(request):
     return render(request, template, context)
 
 
+@login_required
 def booking(request, id):
     confirm_template = 'bookings/booking_details.html'
     deliverd_template = 'bookings/car_deliverd.html'
@@ -43,6 +46,7 @@ def booking(request, id):
         return render(request, confirm_template, context)
 
 
+@login_required
 def car_booking(request):
     template = 'bookings/form.html'
     form = BookingForm(request.POST)
@@ -83,7 +87,7 @@ def car_booking(request):
     context = {'form': form}
     return render(request, template, context)
 
-
+@login_required
 def confirm_booking(request, id):
     booking = Booking.objects.get(id=id)
     return_time = booking.duration + booking.starts
@@ -112,6 +116,7 @@ def confirm_booking(request, id):
             }))
 
 
+@login_required
 def car_delivery(request, id):
     booking = Booking.objects.get(id=id)
     return_time = booking.duration + booking.starts
@@ -133,6 +138,7 @@ def car_delivery(request, id):
             }))
 
 
+@login_required
 def car_return(request, id):
     booking = Booking.objects.get(id=id)
     if request.method == 'POST':

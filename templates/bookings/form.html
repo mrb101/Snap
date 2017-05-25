@@ -1,37 +1,42 @@
-{% extends 'booking.html' %}
-{% load static %} 
+{% extends 'index.html' %}
+{% load static %}
 
-{% block body %}
-
-<div class="col-sm-12" id="content">
-  <form id="addBooking" method="POST" action=""> {% csrf_token %}
-    <table align="center">
-        <tr>
-            <td colspan="2">
-                <h3>Booking Information</h3>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <select id="id_category" class="cartype">
-                    <option value="ECO">Eco</option>
-                    <option value="SED">Sedan</option>
-                    <option value="FAM">Family</option>
-                </select>
-                <h4><input id="id_address" type="text" name="address" placeholder="Address"><br></h4>
-                <h4><input id="id_starts" type="datetime-local" name="date" placeholder="Date"><br></h4>
-                <select id="id_duration" class="rentalduration">
-                    <option value="half">6 Hours</option>
-                    <option value="day">1 Day</option>
-                    <option value="week">1 Week</option>
-                    <option value="month">1 Month</option>
-                </select>
-                <br />
-                <input type="submit" class="fa fa-car" value="Book">
-            </td>
-        </tr>
-    </table>
-  </form>
+{% block content %}
+<div id="green" style="padding-bottom: 60px">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-lg-offset-2 centered" id="content">
+              <form id="addBooking" method="POST" action="">
+                    {% csrf_token %}
+                    <h3>Booking Information</h3>
+                    <div class="form-group">
+                        <select class="form-control" id="id_category" class="cartype">
+                            <option value="ECO">Eco</option>
+                            <option value="SED">Sedan</option>
+                            <option value="FAM">Family</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="id_address" type="text" name="address" placeholder="Address">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="id_starts" type="datetime-local" name="date" placeholder="Date">
+                    </div>
+                    <select class="form-control" id="id_duration" class="rentalduration">
+                        <option value="half">6 Hours</option>
+                        <option value="day">1 Day</option>
+                        <option value="week">1 Week</option>
+                        <option value="month">1 Month</option>
+                    </select>
+                    <br />
+                        <button class="htn btn-lg btn-primary" value="Book" type="submit">Book</button>
+              </form>
+            </div>
+        </div>
+    </div>
 </div>
-
+{% endblock %}
+{% block js %}
+{{ block.super }}
+<script src="{% static 'js/app.js' %}"></script>
 {% endblock %}

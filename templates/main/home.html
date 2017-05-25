@@ -1,4 +1,28 @@
-{% extends 'main.html' %}
-{% block body %}
-HOME
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<div id="hello">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 centered">
+                <img width=400 src="{% static 'Images/typo.png' %}"></img>
+                <h2>Cars on Demand</h2>
+            </div><!-- /col-lg-8 -->
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /hello -->
+
+<div id="green">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 centered">
+                <img width=250 src="{% static 'Images/background-2.png' %}" alt="">
+            </div>
+            <div class="col-lg-7 centered">
+                <h3>The Fastest and most reliable way to find a car in Cyberjaya</h3>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

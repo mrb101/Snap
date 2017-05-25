@@ -12,7 +12,7 @@ from .views import (
 urlpatterns = [
     url(r'^$', bookings, name='booking'),
     url(r'^new/$', car_booking, name='new-booking'),
-    url(r'^confirm/$', confirm_booking, name='confirm'),
-    url(r'^deliverd/$', car_delivery, name='confirm'),
-    url(r'^retunrd/$', car_return, name='returned'),
+    url(r'^confirm/$', confirm_booking, name='confirm-booking'),
+    url(r'^deliverd/$', car_delivery, name='confirm-delivery'),
+    url(r'^retunrd/$', car_return, name='confirm-returned'),
 ]

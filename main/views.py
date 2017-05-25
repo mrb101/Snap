@@ -1,9 +1,15 @@
 from django.shortcuts import render
 
+from django.views.generic import TemplateView
 
-def home(request):
-    template = 'main/index.html'
-    if request.method == "POST":
-        print("hello")
-    context = {}
-    return render(request, template, context)
+
+class HomeView(TemplateView):
+    template_name = 'main/home.html'
+
+
+class AboutView(TemplateView):
+    template_name = 'templates/main/about.html'
+
+
+class Contact(TemplateView):
+    template_name = 'templates/main/contact.html'
