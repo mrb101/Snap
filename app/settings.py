@@ -130,5 +130,5 @@ STATICFILES_DIRS = [
 ]
 
 # Env Var
-API_KEY = os.environ.get('API_KEY')
-API_SEC = os.environ.get('API_SEC')
+API_KEY = '80ab3afa'
+API_SEC = 'ca2095deac1db8be'

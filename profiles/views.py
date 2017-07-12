@@ -16,7 +16,7 @@ def signin(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return redirect(request.GET.get('next') or 'new-booking')
+                return redirect(request.GET.get('next') or 'booking:create_booking')
             else:
                 return redirect('login')
         else:

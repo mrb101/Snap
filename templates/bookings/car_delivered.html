@@ -14,7 +14,11 @@
                     <p class="booking-address"><span style="color: black"> Address: </span>{{ booking.dropoff }}</p>
                     <p class="booking-starts"><span style="color: black"> Starts: </span>{{ booking.starts }}</p>
                     <p class="booking-return"><span style="color: black"> Ends: </span>{{ return_time }}</p>
-                    <button class="btn btn-lg btn-primary" id="deliverd" value="{{ booking.id }}">Deliverd</button>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <input id="booking-id" type="hidden" value={{ booking.id}}>
+                        <button class="btn btn-lg btn-primary" id="deliverd">Deliverd</button>
+                    </form>
                   </table>
                 </div>
             </div>
@@ -24,5 +28,4 @@
 {% endblock %}
 {% block js %}
 {{ block.super }}
-<script src="{% static 'js/app.js' %}"></script>
 {% endblock %}

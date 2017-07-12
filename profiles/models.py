@@ -13,7 +13,7 @@ class Profile(models.Model):
         Nationality,
         Company Name,
     """
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name="profile")
     phone = models.CharField(
         max_length=20,
         blank=False,

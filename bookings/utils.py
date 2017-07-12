@@ -25,6 +25,7 @@ def send_sms_notification(number, text):
             if message["status"] == "0":
                 print("Success")
             else:
+                print(message["status"])
                 print("Error {0}".format(res.code))
 
 

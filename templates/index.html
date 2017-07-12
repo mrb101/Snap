@@ -44,7 +44,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
               {% if user.is_authenticated %}
-                <li class="active"><a href="{% url 'car_booking' %}">Book</a></li>
+                <li class="active"><a href="{% url 'booking:create_booking' %}">Book</a></li>
                 <li><a href="{% url 'logout' %}">logout</a></li>
               {% else %}
                 <li class="active"><a href="{% url 'login' %}">Login / Register</a></li>
