@@ -6,9 +6,9 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 
+import nexmo
+from app.settings import API_KEY, API_SEC
 from cars.models import Category
-
-from .utils import send_sms_notification, send_email_notification
 
 from .models import Booking
 from .forms import (
@@ -52,11 +52,18 @@ class CreateBooking(View):
                 booking_object.customer = request.user
                 booking_object.save()
                 suppliers = User.objects.filter(profile__supplier=True)
+                client = nexmo.Client(key=API_KEY, secret=API_SEC)
                 for supplier in suppliers:
-                    send_sms_notification(
-                        supplier.profile.phone,
-                        "New Booking has been submitted. go to cruz.ninja/booking/{}/".format(bookgin.booking_number)
-                    )
+                    response = client.send_message({
+                        'from': 'Cruz',
+                        'to': supplier.profile.phone,
+                        'text': "New Booking at cruz.ninja/booking/{}/".format(booking_object.booking_number)
+                    })
+                    response_message = response['messages'][0]
+                    if response_message['status'] == '0':
+                        print("message sent")
+                    else:
+                        print("message not sent")
                 messages.success(
                 request,
                 'Your booking request has been submitted. Please wait for confirmation'
@@ -114,10 +121,17 @@ class ConfirmBooking(View):
             booking.booking_confirmed = True
             booking.supplier = request.user
             booking.save()
-            send_sms_notification(
-                booking.customer,
-                "Your booking has been confirmed. go to curz.ninja/booking/{}/ for details".format(booking.booking_number)
-            )
+            client = nexmo.Client(key=API_KEY, secret=API_SEC)
+            response = client.send_message({
+                'from': "Cruz",
+                'to': booking.customer.profile.phone,
+                'text': 'Your booking has been confirmed. go to curz.ninja/booking/{}/'.format(bookgin.booking_number),
+            })
+            response_message = response['messages'][0]
+            if response_message['status'] == '0':
+                print("message sent")
+            else:
+                print("message not sent")
             messages.success(
                 request,
                 'You have confirmed the booking.'
@@ -147,10 +161,17 @@ class BookingDelivered(View):
             booking = self.get_booking()
             booking.car_deliverd = True
             booking.save()
-            send_sms_notification(
-                booking.customer,
-                "Your car is here."
-            )
+            client = nexmo.Client(key=API_KEY, secret=API_SEC)
+            response = client.send_message({
+                'from': "Cruz",
+                'to': booking.customer.profile.phone,
+                'text': 'Your car is here'
+            })
+            response_message = response['messages'][0]
+            if response_message['status'] == '0':
+                print("message sent")
+            else:
+                print("message not sent")
             messages.success(
                 request,
                 'Message has been sent'
@@ -182,10 +203,17 @@ class BookingReturn(View):
             booking = self.get_booking()
             booking.car_returned = True
             booking.save()
-            send_sms_notification(
-                booking.supplier.profile.phone,
-                "Car has been returned from booking number {0}".format(booking.booking_number)
-            )
+            client = nexmo.Client(key=API_KEY, secret=API_SEC)
+            response = client.send_message({
+                'from': "Cruz",
+                'to': booking.customer.profile.phone,
+                'text': 'Car has be returned. cruz.ninja/booking/{}/'.format(booking.booking_number)
+            })
+            response_message = response['messages'][0]
+            if response_message['status'] == '0':
+                print("message sent")
+            else:
+                print("message not sent")
             messages.success(
                 request,
                 'The Supplier is being notified.'
@@ -243,3 +271,6 @@ class BookingClosed(View):
             return render(request, self.template_name, context)
         else:
             return redirect("/")
+
+    def post(self, request, *args, **kwargs):
+        pass
