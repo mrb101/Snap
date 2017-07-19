@@ -125,7 +125,7 @@ class ConfirmBooking(View):
             response = client.send_message({
                 'from': "Cruz",
                 'to': booking.customer.profile.phone,
-                'text': 'Your booking has been confirmed. go to curz.ninja/booking/{}/'.format(bookgin.booking_number),
+                'text': 'Your booking has been confirmed. go to curz.ninja/booking/{}/'.format(booking.booking_number),
             })
             response_message = response['messages'][0]
             if response_message['status'] == '0':
